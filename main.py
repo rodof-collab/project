@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import json
 
 
-def get_data(number_of_pages=1):
+def get_data(number_of_pages: int = 1) -> None:
     links = []
     prices = []
     districts = []
@@ -12,7 +12,7 @@ def get_data(number_of_pages=1):
             f'https://www.cian.ru/cat.php?deal_type=sale&engine_version=2&offer_type=flat&p={page}&region=1')
         soup = BeautifulSoup(request.text, 'html.parser')
 
-        for item in soup.find_all('a', class_='_93444fe79c--link--VtWj6'):
+        for item in soup.find_all('a', {'class': '_93444fe79c--link--VtWj6'}):
             links.append(item['href'])
 
         for item in soup.find_all('span', {'data-mark': 'MainPrice'}):
@@ -32,9 +32,9 @@ def get_data(number_of_pages=1):
 if __name__ == '__main__':
     while True:
         try:
-            pages = int(input("Pages"))
+            pages = int(input("Pages: "))
             break
         except ValueError:
-            print("Error")
+            print("Error! Invalid number of pages. Try again.")
 
     get_data(pages)
